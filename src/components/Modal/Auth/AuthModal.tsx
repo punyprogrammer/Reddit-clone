@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
     Modal,
     ModalOverlay,
@@ -16,6 +16,8 @@ import {useRecoilState} from "recoil"
 import { authModalState } from '../../../atoms/authModalAtom';
 import AuthInputs from './AuthInputs';
 import OAuthButtons from './OAuthButtons';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from '../../../firebase/clientApp';
 
 
 const viewTitleMap={
@@ -26,12 +28,21 @@ const viewTitleMap={
 const AuthModal:React.FC = () => {
     
     const [modalState,setModalState]=useRecoilState(authModalState);
+    const [user,loading,error]=useAuthState(auth)
     const handleClose=()=>{
         setModalState((prev)=>({
             ...prev,
             open:false,
         }))
     }
+
+    // Once the user is logged in 
+    useEffect(()=>{
+      if(user) handleClose();
+      console.log(user)
+    },[
+      user
+    ])
     return (
       <>
         <Modal isOpen={modalState.open} onClose={handleClose}>
