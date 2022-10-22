@@ -31,6 +31,7 @@ const Login: React.FC<LoginProps> = () => {
         [event.target.name]:event.target.value
     }))
   }
+  console.log(loginError?.message)
 
   return (
     <form onSubmit={onSubmit}>
@@ -65,10 +66,26 @@ const Login: React.FC<LoginProps> = () => {
          borderColor:"blue.500"
        }}/>
        <Text textAlign="center" color="red" fontSize='9pt'>
+        <>
+        
         {loginError&&FIREBASE_ERRORS[loginError["message"] as keyof typeof FIREBASE_ERRORS]}
+        </>
        </Text>
       <Button type="submit" width="100%" height="36px" mb={2} mt={2}
       isLoading={loading}>Log In</Button>
+      <Flex justifyContent="center" mb={2}>
+        <Text fontSize='9pt' mr={1}>Forgot your password</Text>
+        <Text fontSize="9pt" fontWeight={700} 
+        color="blue.500"
+        cursor={'pointer'}
+        onClick={()=>setAuthModalState((prev)=>({
+          ...prev,
+          view:'resetPassword'
+        }))}
+        >RESET</Text>
+
+
+      </Flex>
       <Flex fontSize='9pt' justifyContent="center">
         <Text mr={1}>New here?</Text>
         <Text color="blue.500" fontWeight={700} cursor="pointer"

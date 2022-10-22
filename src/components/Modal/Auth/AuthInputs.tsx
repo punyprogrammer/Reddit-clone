@@ -4,6 +4,7 @@ import {useRecoilValue} from "recoil"
 import { authModalState } from '../../../atoms/authModalAtom';
 import  Login from "./Login"
 import SignUp from './SignUp';
+import ResetPassword from './ResetPassword';
 
 // type AuthInputsProps = {
     
@@ -11,7 +12,7 @@ import SignUp from './SignUp';
 const authToRender={
     "login":<Login/>,
     "signup":<SignUp/>,
-    "resetPassword":<h1>Hello</h1>
+    "resetPassword":<ResetPassword/>
 
 }
 
