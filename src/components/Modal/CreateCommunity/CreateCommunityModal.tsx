@@ -1,5 +1,5 @@
 import { Button, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, Box, Divider, Text, Input, Stack, Checkbox, Flex, Icon } from '@chakra-ui/react';
-import { doc, getDoc, serverTimestamp, setDoc } from 'firebase/firestore';
+import { doc, Firestore, getDoc, runTransaction, serverTimestamp, setDoc } from 'firebase/firestore';
 import React,{useState} from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { BsFillEyeFill } from 'react-icons/bs';
@@ -38,22 +38,30 @@ try {
   // Check whether the commmunity name exists or not 
   // If valid create the community
   const communityDocRef=doc(firestore,'communities',communityName);
-  const communityDoc=await getDoc(communityDocRef);
-  if(communityDoc.exists())
-  {
-    throw new Error(`Sorry the name r/${communityName} is already taken ,try a different name`);
-    return;
-  }
-  // Create a community
-  await setDoc(communityDocRef,{
-    creatorId:user?.uid,
-    createdAt:serverTimestamp(),
-    numberOfMembers:1,
-    privacyType:communityType
-  
-  
-  
+  // Run a transation to change both of thr databses
+  await runTransaction(firestore,async(transaction)=>{
+    const communityDoc=await transaction.get(communityDocRef);
+    if(communityDoc.exists())
+    {
+      throw new Error(`Sorry the name r/${communityName} is already taken ,try a different name`);
+      return;
+    }
+    // Create a community
+    transaction.set(communityDocRef,{
+      creatorId:user?.uid,
+      createdAt:serverTimestamp(),
+      numberOfMembers:1,
+      privacyType:communityType
+    })
+    // Create communitySnippet in uer
+    transaction.set(doc(firestore,`users/${user?.uid}/communitySnippets`,communityName),{
+      communityId:communityName,
+      isModerator:true,
+    })
+    
+
   })
+
 } catch (error:any) {
    console.log('Handle Create Community error',error)
    setError(error.message)
