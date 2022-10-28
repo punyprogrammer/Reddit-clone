@@ -9,8 +9,8 @@ export interface Community{
     imageURL?:string;
     
 }
-interface CommunitySnippet{
-    id:string;
+export interface CommunitySnippet{
+    communityId:string;
     isModerator?:string;
     imageURL?:string;
 }
