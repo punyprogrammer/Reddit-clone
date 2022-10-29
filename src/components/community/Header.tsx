@@ -13,7 +13,7 @@ const Header: React.FC<HeaderProps> = ({ communityData }) => {
   const isJoined = communityStateValue?.mySnippets?.find(
     item => item.communityId === communityData.id
   )?true:false;
-  console.log("Header State Value",communityStateValue)
+
   return (
     <Flex direction='column' width='100%' height='146px'>
       <Box height='50%' bg='blue.500' />
@@ -34,10 +34,10 @@ const Header: React.FC<HeaderProps> = ({ communityData }) => {
           )}
           <Flex padding='10px 16px'>
             <Flex direction='column' mr={6}>
-              <Text fontWeight={600} fontSize='16pt'>
+              <Text fontWeight={600} fontSize={{base:'13pt',md:'16pt'}}>
                 {communityData.id}
               </Text>
-              <Text fontWeight={600} fontSize='10pt' color='gray.400'>
+              <Text fontWeight={600} fontSize={{base:'9pt',md:'10.5pt'}} color='gray.400'>
                 r/{communityData.id}
               </Text>
             </Flex>
