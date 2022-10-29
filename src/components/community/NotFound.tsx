@@ -9,7 +9,7 @@ const CommunityNotFound: React.FC = () => {
       justifyContent="center"
       alignItems="center"
       minHeight="60vh"
-      fontWeight={500}
+      fontWeight={700}
     >
         <Text align="center">
 
