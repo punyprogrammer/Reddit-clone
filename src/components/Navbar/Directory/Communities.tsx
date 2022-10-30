@@ -13,8 +13,7 @@ type CommunitiesProps = {
 const Communities:React.FC<CommunitiesProps> = () => {
     const [open,setOpen]= useState(false);
     // get the communities
-    const { communityStateValue, onJoinOrlLeaveCommunity,loading,error } = useCommunityHooks();
-    console.log(open)
+    const { communityStateValue, onJoinOrlLeaveCommunity,loading,error } = useCommunityHooks()
   
   
     
@@ -24,7 +23,7 @@ const Communities:React.FC<CommunitiesProps> = () => {
          <MenuItem width='100%' fontSize='10pt' _hover={{
             bg:'gray.100'
          }}
-         onClick={()=>console.log("Create new community Clicked")}>
+         onClick={()=>setOpen(true)}>
           <Flex align="center" >
             <Icon as={GrAdd} mr={2} fontSize={20}/>
             Create Community
@@ -44,17 +43,16 @@ const Communities:React.FC<CommunitiesProps> = () => {
             
       communityStateValue?.mySnippets.map((item)=>{
         return (
+          <Link href={`/r/${item.communityId}`}>
          <MenuItem width='100%' fontSize='10pt' _hover={{
            bg:'gray.100'
-        }}
-        onClick={()=>setOpen(true)}>
-          <Link href={`/r/${item.communityId}`}>
+        }}>
          <Flex align="center" >
            <Icon as={FaReddit} mr={2} fontSize={20} color="blue.500"/>
             {item.communityId}
          </Flex>
-          </Link>
         </MenuItem>
+          `````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````</Link>
         )
       })
     
