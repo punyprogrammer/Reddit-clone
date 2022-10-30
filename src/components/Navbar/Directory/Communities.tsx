@@ -1,7 +1,10 @@
-import { Flex, Icon, MenuItem } from '@chakra-ui/react';
+import { Flex, Icon, MenuItem, Spinner } from '@chakra-ui/react';
 import React,{useState} from 'react';
 import { GrAdd } from 'react-icons/gr';
+import useCommunityHooks from '../../../hooks/useCommunityHooks';
 import CreateCommunityModal from "../../Modal/CreateCommunity/CreateCommunityModal"
+import { FaReddit } from 'react-icons/fa'
+import Link from 'next/link';
 
 type CommunitiesProps = {
     
@@ -9,7 +12,11 @@ type CommunitiesProps = {
 
 const Communities:React.FC<CommunitiesProps> = () => {
     const [open,setOpen]= useState(false);
-     
+    // get the communities
+    const { communityStateValue, onJoinOrlLeaveCommunity,loading,error } = useCommunityHooks();
+    console.log(open)
+  
+  
     
     return (
         <>
@@ -17,13 +24,45 @@ const Communities:React.FC<CommunitiesProps> = () => {
          <MenuItem width='100%' fontSize='10pt' _hover={{
             bg:'gray.100'
          }}
-         onClick={()=>setOpen(true)}>
+         onClick={()=>console.log("Create new community Clicked")}>
           <Flex align="center" >
             <Icon as={GrAdd} mr={2} fontSize={20}/>
             Create Community
           </Flex>
          </MenuItem>
+         {/* render the joined communities */}
+         {
+          loading?(<Flex justify="center" align="center">
+            <Spinner
+  thickness='4px'
+  speed='0.65s'
+  emptyColor='gray.200'
+  color='blue.500'
+  size='xl'
+/>
+          </Flex>):(
+            
+      communityStateValue?.mySnippets.map((item)=>{
+        return (
+         <MenuItem width='100%' fontSize='10pt' _hover={{
+           bg:'gray.100'
+        }}
+        onClick={()=>setOpen(true)}>
+          <Link href={`/r/${item.communityId}`}>
+         <Flex align="center" >
+           <Icon as={FaReddit} mr={2} fontSize={20} color="blue.500"/>
+            {item.communityId}
+         </Flex>
+          </Link>
+        </MenuItem>
+        )
+      })
+    
+          )
+          }
+         
         </>
     )
-}
+        }
+
 export default Communities;
