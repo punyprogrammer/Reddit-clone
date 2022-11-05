@@ -13,7 +13,7 @@ type CommunitiesProps = {
 const Communities:React.FC<CommunitiesProps> = () => {
     const [open,setOpen]= useState(false);
     // get the communities
-    const { communityStateValue, onJoinOrlLeaveCommunity,loading,error } = useCommunityHooks()
+     const { communityStateValue, onJoinOrlLeaveCommunity,loading,error } = useCommunityHooks()
   
   
     
