@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Post } from '../../atoms/postsAtoms';
 import { AiOutlineDelete } from "react-icons/ai";
 import { BsChat, BsDot } from "react-icons/bs";
@@ -11,7 +11,7 @@ import {
   IoArrowUpCircleSharp,
   IoBookmarkOutline,
 } from "react-icons/io5";
-import { Flex, Icon, Image, Stack, Text } from '@chakra-ui/react';
+import { Flex, Icon, Image, Skeleton, Stack, Text } from '@chakra-ui/react';
 import moment from 'moment';
 
 type PostItemProps = {
@@ -33,6 +33,7 @@ const PostItem:React.FC<PostItemProps> = ({
     onDeletePost,
     onSelectPost,
 }) => {
+    const [imageLoading,setImageLoading]=useState(true)
     
     return (
         <Flex border={"1px solid"} bg="white" borderColor="gray.300"
@@ -78,6 +79,7 @@ const PostItem:React.FC<PostItemProps> = ({
                      <Text fontSize="10pt">{post.body}</Text>
                      {post.imageURL&&(
                         <Flex justify="center">
+                            {imageLoading&&<Skeleton height="300px" width="100%" borderRadius={4}/>}
                             <Image src={post.imageURL} maxHeight='460px' alt="Post Image"/>
 
                         </Flex>
