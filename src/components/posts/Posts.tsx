@@ -20,8 +20,8 @@ const Posts: React.FC<PostsProps> = ({ communityData }) => {
   const {
     postStateValue,
     setPostStateValue,
-    onDelete,
-    onSelect,
+    onDeletePost,
+    onSelectPost,
     onVote
   } = usePosts()
   const getPosts = async () => {
@@ -57,8 +57,8 @@ const Posts: React.FC<PostsProps> = ({ communityData }) => {
             userIsCreator={user?.uid === post.creatorId}
             key={post.id}
             onVote={onVote}
-            onDeletePost={onDelete}
-            onSelectPost={onSelect}
+            onDeletePost={onDeletePost}
+            onSelectPost={onSelectPost}
             userVoteValue={undefined}
           />
         )

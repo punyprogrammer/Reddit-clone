@@ -13,6 +13,7 @@ import {
 } from "react-icons/io5";
 import { Flex, Icon, Image, Skeleton, Stack, Text } from '@chakra-ui/react';
 import moment from 'moment';
+import DeletePostModal from "../Modal/Confirm/DeletePostModal"
 
 type PostItemProps = {
     post:Post;
@@ -33,7 +34,23 @@ const PostItem:React.FC<PostItemProps> = ({
     onDeletePost,
     onSelectPost,
 }) => {
-    const [imageLoading,setImageLoading]=useState(true)
+    const [imageLoading,setImageLoading]=useState(true);
+    const [deleteModalOpen,setDeleteModalOpen]=useState(false);
+    const [error,setError]=useState(false)
+
+    // const handleDelete
+    const handleDelete=async()=>{
+        try {
+          const success=await onDeletePost(post)
+          if(!success)
+          {
+            throw new Error('Something went wrong while deleting the post');
+          }  
+        } catch (error:any) {
+            setError(error.message)
+            console.log("handle Delete Error",error.message)
+        }
+    }
     
     return (
         <Flex border={"1px solid"} bg="white" borderColor="gray.300"
@@ -109,7 +126,7 @@ const PostItem:React.FC<PostItemProps> = ({
                         userIsCreator&&<Flex align="center" p='8px 10px' borderRadius={4}
                         _hover={{bg:"gray.200"}}
                         cursor="pointer"
-                        onClick={onDeletePost}>
+                        onClick={()=>setDeleteModalOpen(true)}>
                                <Icon as ={AiOutlineDelete} mr={1}/>
                                <Text fontSize="9pt">Delete</Text>
                         </Flex>
@@ -119,7 +136,7 @@ const PostItem:React.FC<PostItemProps> = ({
 
             </Flex>
            
-
+          <DeletePostModal open={deleteModalOpen} setOpen={setDeleteModalOpen} handleDelete={handleDelete}/>
         </Flex>
     )
 }
