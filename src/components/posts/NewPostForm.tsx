@@ -102,7 +102,7 @@ const NewPostForm: React.FC<NewPostFormProps> = ({ user }) => {
       setTimeout(() => {
         router.back()
       }, 3000)
-    } catch (error:any) {
+    } catch (error) {
       console.log('handleCreatePostError', error.message)
       setError('Something went wrong with uploading your post')
     } finally {
@@ -136,6 +136,7 @@ const NewPostForm: React.FC<NewPostFormProps> = ({ user }) => {
             setSelectedTab={setSelectedTab}
             selected={item.title === selectedTab}
             item={item}
+            key={item.title}
           />
         ))}
       </Flex>
