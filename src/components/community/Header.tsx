@@ -9,10 +9,17 @@ type HeaderProps = {
 }
 
 const Header: React.FC<HeaderProps> = ({ communityData }) => {
-  const { communityStateValue, onJoinOrlLeaveCommunity,loading,error } = useCommunityHooks()
+  const {
+    communityStateValue,
+    onJoinOrlLeaveCommunity,
+    loading,
+    error
+  } = useCommunityHooks()
   const isJoined = communityStateValue?.mySnippets?.find(
     item => item.communityId === communityData.id
-  )?true:false;
+  )
+    ? true
+    : false
 
   return (
     <Flex direction='column' width='100%' height='146px'>
@@ -34,10 +41,14 @@ const Header: React.FC<HeaderProps> = ({ communityData }) => {
           )}
           <Flex padding='10px 16px'>
             <Flex direction='column' mr={6}>
-              <Text fontWeight={600} fontSize={{base:'13pt',md:'16pt'}}>
+              <Text fontWeight={600} fontSize={{ base: '13pt', md: '16pt' }}>
                 {communityData.id}
               </Text>
-              <Text fontWeight={600} fontSize={{base:'9pt',md:'10.5pt'}} color='gray.400'>
+              <Text
+                fontWeight={600}
+                fontSize={{ base: '9pt', md: '10.5pt' }}
+                color='gray.400'
+              >
                 r/{communityData.id}
               </Text>
             </Flex>
@@ -47,8 +58,7 @@ const Header: React.FC<HeaderProps> = ({ communityData }) => {
               pr={6}
               isLoading={loading}
               onClick={() => onJoinOrlLeaveCommunity(communityData, isJoined)}
-              variant={isJoined?"outline":"solid"}
-
+              variant={isJoined ? 'outline' : 'solid'}
             >
               {isJoined ? 'Joined' : 'Join'}
             </Button>
