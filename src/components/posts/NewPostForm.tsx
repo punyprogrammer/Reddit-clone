@@ -102,7 +102,7 @@ const NewPostForm: React.FC<NewPostFormProps> = ({ user }) => {
       setTimeout(() => {
         router.back()
       }, 3000)
-    } catch (error) {
+    } catch (error:any) {
       console.log('handleCreatePostError', error.message)
       setError('Something went wrong with uploading your post')
     } finally {
