@@ -14,7 +14,8 @@ export interface CommunitySnippet {
   imageURL?: string
 }
 interface CommunityState {
-  mySnippets: CommunitySnippet[]
+  mySnippets: CommunitySnippet[],
+  currentCommunity?:Community,
 }
 const defaultCommunityState: CommunityState = {
   mySnippets: []
